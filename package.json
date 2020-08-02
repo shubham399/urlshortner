@@ -1,0 +1,32 @@
+{
+  "name": "urlshortner",
+  "version": "0.0.1",
+  "description": "A Url Shortner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubham399/urlshortner.git"
+  },
+  "author": "Shubham Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shubham399/urlshortner/issues"
+  },
+  "homepage": "https://github.com/shubham399/urlshortner#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "monk": "^7.3.1",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.1.12",
+    "yup": "^0.29.2"
+  }
+}
