@@ -35,8 +35,15 @@ app.post('/url', async (req, res, next) => {
         let body = req.body;
         await schema.validate(body)
         body['slug'] = getSlug(); // Add slug in the object
-        let response = await urls.insert(body)
-        res.json(response)
+        // Reuse if the URL is already present in our DB
+        let reuse = await urls.findOne({url:body.url})
+        if (reuse){
+          res.json(reuse)
+        }
+        else{
+          let response = await urls.insert(body)
+          res.json(response)
+        }
     } catch (e) {
         next(e)
     }
@@ -55,7 +62,9 @@ app.get('/:slug', async (req, res, next) => {
 });
 
 app.use((e, req, res, next) => {
+    res.status(400)
     res.json({
+        error: true,
         message: e.message,
         stack: process.env.NODE_ENV === 'production' ? undefined : e.stack
     })
