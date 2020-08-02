@@ -22,7 +22,7 @@ function submitURL() {
         .then(response => response.json())
         .then(r => {
           let slug = r.slug
-          let link = `<a href="${slug}">${location}${slug}</a>`
+          let link = `<a href="${slug}">${location}/${slug}</a>`
           // console.log(link);
           result.hidden = false;
           result.innerHTML = link
