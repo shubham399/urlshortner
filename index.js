@@ -3,7 +3,7 @@ const helmet = require("helmet")
 const morgan = require("morgan")
 const yup = require("yup");
 const monk = require("monk")
-const db = require('monk')(process.env.MONGODB_URI || 'localhost/urlshortner')
+const db = require('monk')(process.env.DB_URI || process.env.MONGODB_URI || 'localhost/urlshortner')
 const app = express()
 const port = process.env.PORT || 1337
 const {
