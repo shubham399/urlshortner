@@ -70,6 +70,10 @@ app.use((e, req, res, next) => {
     })
 })
 
-app.listen(port, () => {
-    console.log(`URL Shortner app listening at http://localhost:${port}`)
-})
+db.then(() => {
+    console.log('Connected correctly to server')
+    app.listen(port, () => {
+        console.log(`URL Shortner app listening at http://localhost:${port}`)
+    })
+}).catch(e =>
+    console.error(e))
