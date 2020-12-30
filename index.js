@@ -60,7 +60,13 @@ app.get('/:slug', async (req, res, next) => {
         let urlObj = await urls.findOne({
             slug: slug
         })
-        res.redirect(urlObj.url)
+        if(urlObj){
+            res.redirect(urlObj.url)
+        }
+        else{
+            res.status(404);
+            res.json({error:true,message:`${slug} not found`})
+        }
     } catch (e) {
         next(e)
     }
@@ -84,7 +90,4 @@ db.then(() => {
     console.error(e))
 
 
-module.exports = {
-    app,
-    db
-}
+module.exports = {app}
