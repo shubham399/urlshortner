@@ -3,7 +3,11 @@ const helmet = require("helmet")
 const morgan = require("morgan")
 const yup = require("yup");
 const monk = require("monk")
-const db = require('monk')(process.env.DB_URI || process.env.MONGODB_URI || 'localhost/urlshortner')
+
+
+
+
+const db = monk(process.env.DB_URI || process.env.MONGODB_URI || 'localhost/urlshortner')
 const app = express()
 const port = process.env.PORT || 1337
 const {
@@ -36,13 +40,14 @@ app.post('/url', async (req, res, next) => {
         await schema.validate(body)
         body['slug'] = getSlug(); // Add slug in the object
         // Reuse if the URL is already present in our DB
-        let reuse = await urls.findOne({url:body.url})
-        if (reuse){
-          res.json(reuse)
-        }
-        else{
-          let response = await urls.insert(body)
-          res.json(response)
+        let reuse = await urls.findOne({
+            url: body.url
+        })
+        if (reuse) {
+            res.json(reuse)
+        } else {
+            let response = await urls.insert(body)
+            res.json(response)
         }
     } catch (e) {
         next(e)
@@ -51,7 +56,7 @@ app.post('/url', async (req, res, next) => {
 
 app.get('/:slug', async (req, res, next) => {
     try {
-      let slug = req.params.slug
+        let slug = req.params.slug
         let urlObj = await urls.findOne({
             slug: slug
         })
@@ -77,3 +82,9 @@ db.then(() => {
     })
 }).catch(e =>
     console.error(e))
+
+
+module.exports = {
+    app,
+    db
+}
