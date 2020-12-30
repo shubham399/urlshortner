@@ -4,7 +4,7 @@
   "description": "A Url Shortner",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit",
+    "test": "mocha ./test/init.spec.js --delay",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
