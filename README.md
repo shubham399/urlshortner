@@ -1,7 +1,7 @@
 
 # Urlshortner
 
-Is an URL Shortner running on `s.f3v3r.in`
+Is an URL Shortner running on [https://s.f3v3r.in](https://s.f3v3r.in)
 
 
 
@@ -82,3 +82,9 @@ To run tests, run the following command
   npm run test
 ```
 
+
+## Badges
+
+![BuildStatus](https://github.com/shubham399/urlshortner/actions/workflows/node.js.yml/badge.svg)
+![](https://img.shields.io/github/issues/shubham399/urlshortner)
+![](https://img.shields.io/github/license/shubham399/urlshortner)
