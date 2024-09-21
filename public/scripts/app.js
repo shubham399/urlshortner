@@ -1,6 +1,6 @@
 function submitURL() {
     let location = window.location.origin;
-    let result = document.getElementById("result");
+    let result = document.getElementById("shortUrlInput");
     let copyButton = document.getElementById("copyButton");
     let error = document.getElementById("error");
     let url = document.getElementById("url").value;
@@ -24,8 +24,9 @@ function submitURL() {
                 error.innerHTML = r.message
             } else {
                 let slug = r.slug
-                const resultElement = document.getElementById("shortUrlInput");
-                resultElement.value = `${location}/${slug}`
+              result.hidden = false;
+                error.hidden = false;
+                result.value = `${location}/${slug}`
             }
         })
         .catch(error => console.log('error', error));
