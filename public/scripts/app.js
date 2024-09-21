@@ -24,12 +24,8 @@ function submitURL() {
                 error.innerHTML = r.message
             } else {
                 let slug = r.slug
-                let link = `<a id="link" href="${slug}">${location}/${slug}</a>`
-                // console.log(link);
-                error.hidden = true;
-                result.hidden = false;
-                copyButton.hidden = false;
-                result.innerHTML = link
+                const resultElement = document.getElementById("shortUrlInput");
+                resultElement.value = `${location}/${slug}`
             }
         })
         .catch(error => console.log('error', error));
