@@ -1,7 +1,6 @@
 function submitURL() {
     let location = window.location.origin;
     let result = document.getElementById("shortUrlInput");
-    let error = document.getElementById("error");
     let url = document.getElementById("url").value;
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -19,12 +18,9 @@ function submitURL() {
         .then(r => {
             if (r.error) {
                 result.hidden = true;
-                error.hidden = false;
-                error.innerHTML = r.message
             } else {
                 let slug = r.slug
-              result.hidden = false;
-                error.hidden = false;
+                result.hidden = false;
                 result.value = `${location}/${slug}`
             }
         })
