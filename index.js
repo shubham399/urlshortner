@@ -46,7 +46,7 @@ app.post('/url', async (req, res, next) => {
         if (reuse) {
             res.json(reuse)
         } else {
-            let response = await urls.insert(body)
+            let response = await urls.insert({...body, visit: 0 })
             res.json(response)
         }
     } catch (e) {
@@ -61,6 +61,10 @@ app.get('/:slug', async (req, res, next) => {
             slug: slug
         })
         if(urlObj){
+            await urls.updateOne(
+                { slug: slug }, // Query filter
+                { $inc: { visit: 1 } } // Update: Increment the count field by 1
+                );
             res.redirect(urlObj.url)
         }
         else{
