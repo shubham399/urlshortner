@@ -61,7 +61,7 @@ app.get('/:slug', async (req, res, next) => {
             slug: slug
         })
         if(urlObj){
-            await urls.updateOne(
+            await urls.update(
                 { slug: slug }, // Query filter
                 { $inc: { visit: 1 } } // Update: Increment the count field by 1
                 );
