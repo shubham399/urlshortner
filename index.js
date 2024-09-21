@@ -46,7 +46,7 @@ app.post('/url', async (req, res, next) => {
         if (reuse) {
             res.json(reuse)
         } else {
-            let response = await urls.insert({...body, visit: 0 })
+            let response = await urls.insert({...body, visit: 0,createdAt: new Date() })
             res.json(response)
         }
     } catch (e) {
