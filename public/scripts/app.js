@@ -1,7 +1,6 @@
 function submitURL() {
     let location = window.location.origin;
     let result = document.getElementById("shortUrlInput");
-    let copyButton = document.getElementById("copyButton");
     let error = document.getElementById("error");
     let url = document.getElementById("url").value;
     var myHeaders = new Headers();
