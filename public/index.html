@@ -1,58 +1,223 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Font Awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-        crossorigin="anonymous" />
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/footer.css">
-    <title>My URL Shortner</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            line-height: 1.6;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header .container {
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2a5bd7;
+            font-size: 24px;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 40px 0;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        input[type="url"] {
+            width: 100%;
+            padding: 10px 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #2a5bd7;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1e4bb8;
+        }
+
+        #result {
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+            padding: 24px;
+            display: none;
+        }
+
+        #result h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .url-container {
+            display: flex;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #shortUrlInput {
+            flex-grow: 1;
+            padding: 10px 16px;
+            border: none;
+            font-size: 16px;
+        }
+
+        #copyButton {
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #copyButton:hover {
+            background-color: #e0e0e0;
+        }
+
+        #copyMessage {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        footer {
+            background-color: #fff;
+            border-top: 1px solid #eee;
+            padding: 20px 0;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
 <body>
-    <div class="container">
-        <h1 style="text-align:center;">My URL Shortner</h1>
-        <form onsubmit="event.preventDefault(); submitURL();">
-            <div class="form-group">
-                <label for="url">URL:</label>
-                <input type="url" class="form-control" placeholder="Enter URL" id="url">
-            </div>
-            <button type="submit" class="btn btn-primary  btn-lg btn-block">Shorten</button>
-        </form>
-        <br>
-        <div class="row">
-            <div id="result" hidden=true class="p-3">
-            </div>
-            <button id="copyButton" onclick="copyLink()" hidden=true class="btn btn-info btn-sm">Copy Link</button>
-            <div id="error" class="alert alert-danger" role="alert" hidden=true>
-                We Fucked up
+    <header>
+        <div class="container">
+            <h1>URL Shortener</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Shorten your link</h2>
+                    <form onsubmit="event.preventDefault(); submitURL();">
+                        <input type="url" id="url" placeholder="Paste a link to shorten it" required>
+                        <button type="submit" id="submitButton">Shorten</button>
+                    </form>
+                </div>
+                
+                <div id="result">
+                    <h3>Your shortened URL</h3>
+                    <div class="url-container">
+                        <input type="text" id="shortUrlInput" readonly>
+                        <button onclick="copyLink()" id="copyButton">Copy</button>
+                    </div>
+                    <p id="copyMessage">Copied to clipboard!</p>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
+    <footer>
+        <div class="container">
+            <p>© 2023 URL Shortener. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script defer src="./scripts/app.js"></script>
-</body>
-<footer class="footer">
-    Find the Code: <a class="btn btn-light btn-sm" href="https://github.com/shubham399/urlshortner"> <i
-            class="fab fa-github"></i> Github</a>
-</footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const resultDiv = document.getElementById('result');
+            const submitButton = document.getElementById('submitButton');
+            const copyMessage = document.getElementById('copyMessage');
 
+            form.addEventListener('submit', function() {
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Shortening...';
+                submitButton.disabled = true;
+
+                // Simulate a delay (remove this in production if not needed)
+                setTimeout(() => {
+                    submitButton.innerHTML = 'Shorten';
+                    submitButton.disabled = false;
+                    
+                    // Assuming the result is shown by app.js
+                    resultDiv.style.display = 'block';
+                }, 1500);
+            });
+
+            document.getElementById('copyButton').addEventListener('click', function() {
+                copyMessage.style.display = 'block';
+                setTimeout(() => {
+                    copyMessage.style.display = 'none';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
 </html>
