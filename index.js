@@ -61,10 +61,13 @@ app.get('/:slug', async (req, res, next) => {
             slug: slug
         })
         if(urlObj){
-            await urls.update(
-                { slug: slug }, // Query filter
-                { $inc: { visit: 1 },vistedAt: new Date() } // Update: Increment the count field by 1
-                );
+           await urls.update(
+    { slug: slug }, // Query filter
+    {
+        $inc: { visit: 1 }, // Increment the visit field by 1
+        $set: { visitedAt: new Date() } // Set the visitedAt field to the current date
+    }
+);
             res.redirect(urlObj.url)
         }
         else{
