@@ -34,11 +34,14 @@ function submitURL() {
 
 
 function copyLink() {
-    /* Get the text field */
-    let copyText = document.getElementById("link")
-    const range = document.createRange();
-    range.selectNode(copyText);
-    window.getSelection().addRange(range);
+    /* Get the input field */
+    let copyText = document.getElementById("shortUrlInput");
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
     try {
         var successful = document.execCommand('copy');
         var msg = successful ? 'successful' : 'unsuccessful';
@@ -46,4 +49,9 @@ function copyLink() {
     } catch (err) {
         console.log('Oops, unable to copy');
     }
+
+    /* Optionally, show feedback to the user */
+    let copyButton = document.getElementById("copyButton");
+    copyButton.innerHTML = "Copied!";
 }
+
