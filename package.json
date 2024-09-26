@@ -26,7 +26,7 @@
     "supertest": "^6.0.1"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.21.0",
     "helmet": "^3.23.3",
     "mongoose": "^5.13.20",
     "monk": "^7.3.1",
